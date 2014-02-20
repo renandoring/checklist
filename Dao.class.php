@@ -2,10 +2,20 @@
 include_once 'Connection.class.php';
 
 class Dao extends Connection{
+    //Funcao de busca no banco
+    function Select(){
+        try{
+           $conn = new PDO('mysql:host='.$this->hostname.';dbname='.$this->dbname, $this->username, $this->password);
+           $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);    
+           $query = "SELECT firstID, campo FROM listadd";
+           foreach ($conn->query($query) as $row){
+               echo $row['campo']."<br>";
+           }
+           echo "PRODUTOS SELECIONADOS COM SUCESSO!";
+        } catch (Exception $ex) {echo "ERROR: " . $ex->getMessage();}
+    }
     //Funcao Insere no banco
-    function Insert(){
-        $firstID = 2;
-        $campo = "Salgadinho";
+    function Insert($firstID,$campo){        
         try{
             $conn = new PDO('mysql:host='.$this->hostname.';dbname='.$this->dbname, $this->username, $this->password);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);        
